@@ -60,3 +60,4 @@ A seção Quem Somos foi atualizada com o texto institucional fornecido pelo cli
 ## Formulário conectado ao WhatsApp — versão 5
 O formulário valida os campos obrigatórios e abre o WhatsApp comercial da Contilex (`+55 43 99605-5720`) com uma mensagem pré-preenchida contendo os dados informados. O visitante ainda precisa revisar e tocar em Enviar no WhatsApp. Não há armazenamento dos dados no site.
 Antes de publicar, teste em computador e celular e publique uma Política de Privacidade adequada à operação.
+Integração contínua: GitHub conectado ao Cloudflare Workers.
