@@ -1,3 +1,4 @@
+// Navegação responsiva e formulário de contato Contilex.
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.main-nav');
 if (toggle && nav) {
@@ -11,35 +12,34 @@ if (toggle && nav) {
     toggle.setAttribute('aria-expanded', 'false');
   }));
 }
-document.getElementById('year').textContent = new Date().getFullYear();
+const year = document.getElementById('year');
+if (year) year.textContent = new Date().getFullYear();
 
-// Envia os dados preenchidos para o WhatsApp comercial da Contilex.
-// Não há banco de dados: o visitante revisa e envia a mensagem pelo próprio WhatsApp.
 const form = document.getElementById('lead-form');
 const status = document.getElementById('form-status');
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (!form.reportValidity()) return;
-
-  const data = new FormData(form);
-  const message = [
-    'Olá! Gostaria de solicitar uma conversa com a Contilex Condomínios.',
-    '',
-    `Nome: ${data.get('name')}`,
-    `E-mail: ${data.get('email')}`,
-    `Telefone: ${data.get('phone')}`,
-    `Tipo de empreendimento: ${data.get('type')}`,
-    `Solução de interesse: ${data.get('service')}`,
-    `Mensagem: ${data.get('message') || 'Não informado'}`,
-    '',
-    'Enviei meus dados pelo formulário do site da Contilex.'
-  ].join('\\n');
-
-  const whatsappUrl = `https://wa.me/5543996055720?text=${encodeURIComponent(message)}`;
-  const newWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-  if (newWindow) {
-    status.textContent = 'O WhatsApp foi aberto com sua mensagem. Revise os dados e toque em Enviar para concluir o contato.';
-  } else {
-    status.textContent = 'O navegador bloqueou a abertura do WhatsApp. Permita pop-ups ou acesse https://wa.me/5543996055720 e envie seus dados.';
-  }
-});
+if (form) {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    const data = new FormData(form);
+    const labels = {
+      name: 'Nome', condo: 'Condomínio', location: 'Bairro/cidade',
+      units: 'Quantidade de unidades', employees: 'Funcionários próprios',
+      manager: 'Administradora atual', type: 'Tipo de empreendimento',
+      service: 'Principal necessidade', phone: 'Telefone/WhatsApp',
+      email: 'E-mail', message: 'Informações adicionais'
+    };
+    const lines = ['Olá! Gostaria de conversar com a Contilex Condomínios.', ''];
+    for (const [key, label] of Object.entries(labels)) {
+      const value = data.get(key);
+      if (value && String(value).trim()) lines.push(label + ': ' + value);
+    }
+    lines.push('', 'Enviei meus dados pelo formulário do site da Contilex.');
+    // O formulário atual da homepage usa o número comercial cadastrado anteriormente.
+    const whatsappUrl = 'https://wa.me/5543996055720?text=' + encodeURIComponent(lines.join('\n'));
+    const opened = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (status) status.textContent = opened
+      ? 'O WhatsApp foi aberto com sua mensagem. Revise os dados e toque em Enviar para concluir o contato.'
+      : 'O navegador bloqueou a abertura do WhatsApp. Permita pop-ups ou acesse https://wa.me/5543996055720.';
+  });
+}
