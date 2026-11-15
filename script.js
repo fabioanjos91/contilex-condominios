@@ -136,13 +136,13 @@ if (form) {
     lines.push('', 'Enviei meus dados pelo formulário do site da Contilex.');
     const whatsappUrl = 'https://wa.me/5543988021267?text=' + encodeURIComponent(lines.join('\n'));
     const opened = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    if (opened) {
-      track('generate_lead', {
-        page_path: window.location.pathname,
-        service_interest: String(data.get('service') || 'não informado'),
-        form_name: 'solicitar_conversa'
-      });
-    }
+    // Registra a intenção qualificada após validação e abertura solicitada do WhatsApp.
+    // Não significa que o visitante efetivamente enviou a mensagem.
+    track('generate_lead', {
+      page_path: window.location.pathname,
+      service_interest: String(data.get('service') || 'não informado'),
+      form_name: 'solicitar_conversa'
+    });
     if (status) status.textContent = opened
       ? 'O WhatsApp foi aberto com sua mensagem. Revise os dados e toque em Enviar para concluir o contato.'
       : 'O navegador bloqueou a abertura do WhatsApp. Permita pop-ups ou acesse https://wa.me/5543988021267.';
