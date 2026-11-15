@@ -35,11 +35,11 @@ if (form) {
       if (value && String(value).trim()) lines.push(label + ': ' + value);
     }
     lines.push('', 'Enviei meus dados pelo formulário do site da Contilex.');
-    // O formulário atual da homepage usa o número comercial cadastrado anteriormente.
-    const whatsappUrl = 'https://wa.me/5543996055720?text=' + encodeURIComponent(lines.join('\n'));
+    // O formulário direciona para o WhatsApp oficial confirmado pela Contilex.
+    const whatsappUrl = 'https://wa.me/5543988021267?text=' + encodeURIComponent(lines.join('\n'));
     const opened = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     if (status) status.textContent = opened
       ? 'O WhatsApp foi aberto com sua mensagem. Revise os dados e toque em Enviar para concluir o contato.'
-      : 'O navegador bloqueou a abertura do WhatsApp. Permita pop-ups ou acesse https://wa.me/5543996055720.';
+      : 'O navegador bloqueou a abertura do WhatsApp. Permita pop-ups ou acesse https://wa.me/5543988021267.';
   });
 }
